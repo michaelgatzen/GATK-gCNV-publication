@@ -43,7 +43,7 @@ def plot_and_save_per_event_evaluation_results(evaluation_result_list: List[PerE
         print("Number of true positives for events of the following bin sizes (recall calculation): {0}".format(tp))
         print("Number of false negatives for events of the following bin sizes (recall calculation): {0}".format(fn))
         recall_for_bins.append([sum_over_dict(tp, i, bins) / max(1., (sum_over_dict(tp, i, bins) + sum_over_dict(fn, i, bins))) for i in bins])
-        f_1_for_bins.append([2 / ((1. / recall_for_bins[index][i]) + (1. / precisions_for_bins[index][i])) for i in bins])
+        f_1_for_bins.append([np.nan if recall_for_bins[index][i] == 0 or precisions_for_bins[index][i] == 0 else (2 / ((1. / recall_for_bins[index][i]) + (1. / precisions_for_bins[index][i]))) for i in bins])
 
     # plot precision
     gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[1, 1.8])
